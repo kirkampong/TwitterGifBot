@@ -43,7 +43,7 @@ class TwitterBot:
 					time.sleep(30) # take a break before continuing
 
 
-#main:wq
+#run
 kirk = TwitterBot("kirkampong3@gmail.com", "xxxxxx")
 kirk.login()
 kirk.like_tweet("topic-of-interest")
