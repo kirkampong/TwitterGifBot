@@ -1,2 +1,2 @@
 # TwitterGifBot
-Twitter gif bot readme initialized
+Work in progress... been v busy
