@@ -13,3 +13,8 @@ auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
 api = tweepy.API(auth)
 
 #Use api.mentions_timeline to retrieve mentions stream..
+mentions = api.mentions_timeline()
+for mention in mentions:
+    print(str(mention.id) + '-' + mention.text)
+    if '#randomGif' in mention.text.lower():
+        print('Mention detected... responding...')
