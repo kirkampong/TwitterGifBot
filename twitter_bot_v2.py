@@ -35,13 +35,20 @@ def store_last_seen_id(last_seen_id, filename):
     f_write.close()
     return
 
-last_seen_id = fetch_last_seen_id(FILE_NAME)
+def reply_to_tweets():
+    last_seen_id = fetch_last_seen_id(FILE_NAME)
+    mentions = api.mentions_timeline(last_seen_id, tweet_mode='extended')
 
-mentions = api.mentions_timeline(last_seen_id, tweet_mode='extended')
+    for mention in reversed(mentions):
+        print(str(mention.id) + '-' + mention.full_text)
+        last_seen_id = mention.id
+        store_last_seen_id(last_seen_id, FILE_NAME)
+        if '#randomgif' in mention.full_text.lower():
+            print('#hashtag detected... responding...')
+            api.update_status('@' + mention.user.screen_name +
+                '..tweetPayload...', mention.id)
 
-for mention in reversed(mentions):
-    print(str(mention.id) + '-' + mention.full_text)
-    last_seen_id = mention.id
-    store_last_seen_id(last_seen_id, FILE_NAME)
-    if '#randomgif' in mention.full_text.lower():
-        print('#hashtag detected... responding...')
+while True:
+    # Bot perpetually listens for an invocation
+    reply_to_tweets()
+    time.sleep(15)
