@@ -54,9 +54,11 @@ def reply_to_tweets():
         print(str(mention.id) + '-' + mention.full_text)
         last_seen_id = mention.id
         store_last_seen_id(last_seen_id, ID_FILE_NAME)
-        if '#randomgif' in mention.full_text.lower():
+
+        if mention.in_reply_to_status_id == None:
             print('...#hashtag detected, responding...')
             api.update_status(
+                '@' + mention.user.screen_name + ' ' +
                 get_random_quote(), # status
                 mention.id,         # in reply to...
                 AUTO_POPULATE_REPLY_METADATA   # other leading @mentions included.
@@ -65,4 +67,4 @@ def reply_to_tweets():
 while True:
     # Bot perpetually listens for an invocation
     reply_to_tweets()
-    time.sleep(15)
+    time.sleep(7)
