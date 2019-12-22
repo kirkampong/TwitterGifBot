@@ -1,5 +1,6 @@
 import tweepy
 import time
+import random
 
 print("My twitter bot is starting...")
 
@@ -13,7 +14,8 @@ auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
 api = tweepy.API(auth)
 
-FILE_NAME = 'last_seen_id.txt'
+ID_FILE_NAME = 'last_seen_id.txt'
+QUOTES_FILE_NAME = 'quotes.txt'
 AUTO_POPULATE_REPLY_METADATA = True
 
 #Using api.mentions_timeline to retrieve mentions stream...
@@ -37,20 +39,27 @@ def store_last_seen_id(last_seen_id, filename):
     f_write.close()
     return
 
+def get_random_quote():
+    quotes_file = open(QUOTES_FILE_NAME)
+    quotes = quotes_file.readlines()
+    number_of_lines = len(open(QUOTES_FILE_NAME).readlines())
+    print('...fetching random quote...')
+    return quotes[random.randint(0, number_of_lines-1)]
+
 def reply_to_tweets():
-    last_seen_id = fetch_last_seen_id(FILE_NAME)
+    last_seen_id = fetch_last_seen_id(ID_FILE_NAME)
     mentions = api.mentions_timeline(last_seen_id, tweet_mode='extended')
 
     for mention in reversed(mentions):
         print(str(mention.id) + '-' + mention.full_text)
         last_seen_id = mention.id
-        store_last_seen_id(last_seen_id, FILE_NAME)
+        store_last_seen_id(last_seen_id, ID_FILE_NAME)
         if '#randomgif' in mention.full_text.lower():
-            print('#hashtag detected... responding...')
+            print('...#hashtag detected, responding...')
             api.update_status(
-                '@' + mention.user.screen_name +' ...tweetPayload...', #status
-                mention.id,         #in reply to...
-                AUTO_POPULATE_REPLY_METADATA   #leading @mentions will be added to the new Tweet from there.
+                get_random_quote(), # status
+                mention.id,         # in reply to...
+                AUTO_POPULATE_REPLY_METADATA   # other leading @mentions included.
             )
 
 while True:
