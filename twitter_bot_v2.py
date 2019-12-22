@@ -1,4 +1,5 @@
 import tweepy
+import time
 
 print("My twitter bot is starting...")
 
@@ -13,6 +14,7 @@ auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
 api = tweepy.API(auth)
 
 FILE_NAME = 'last_seen_id.txt'
+AUTO_POPULATE_REPLY_METADATA = True
 
 #Using api.mentions_timeline to retrieve mentions stream...
 #>>> api.mentions_timeline()[0].__dict__.keys()
@@ -45,8 +47,11 @@ def reply_to_tweets():
         store_last_seen_id(last_seen_id, FILE_NAME)
         if '#randomgif' in mention.full_text.lower():
             print('#hashtag detected... responding...')
-            api.update_status('@' + mention.user.screen_name +
-                '..tweetPayload...', mention.id)
+            api.update_status(
+                '@' + mention.user.screen_name +' ...tweetPayload...', #status
+                mention.id,         #in reply to...
+                AUTO_POPULATE_REPLY_METADATA   #leading @mentions will be added to the new Tweet from there.
+            )
 
 while True:
     # Bot perpetually listens for an invocation
