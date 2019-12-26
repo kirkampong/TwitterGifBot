@@ -52,10 +52,11 @@ def reply_to_tweets():
 
     for mention in reversed(mentions):
         print(str(mention.id) + '-' + mention.full_text)
+        print(mention.entities)
         last_seen_id = mention.id
         store_last_seen_id(last_seen_id, ID_FILE_NAME)
 
-        if mention.in_reply_to_status_id == None:
+        if '#advice' in mention.full_text:
             print('...#hashtag detected, responding...')
             api.update_status(
                 '@' + mention.user.screen_name + ' ' +
