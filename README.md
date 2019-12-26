@@ -19,3 +19,5 @@ Bot is live: the script lives in python anywhere : https://www.pythonanywhere.co
   - Error Msg >> `tweepy.error.RateLimitError: [{'message': 'Rate limit exceeded', 'code': 88}]`
   Twitter is now enforcing rate limits on a per-user and per-app level, which was an annoyance during testing. May not be a big problem for now since the per-app threshold is ok. However should monitor logs from time2time for RLEs.
   
+## Demo
+![bot in action](demo/advice2.png)
