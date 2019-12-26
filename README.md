@@ -13,7 +13,7 @@ Bot is live: the script lives in python anywhere : https://www.pythonanywhere.co
 
 ## Issues
 * **Spurious replies** [https://github.com/kirkampong/TwitterGifBot/issues/2#issue-541421612] 
-  - Twitter APIs dont deal w/replies vs mentions in a good way, making it hard to write the bot the way I want (which is slightly different from bots like `@QuotedReplies`). Added the **#advice** requirement as a wrokaround :( . Perhaps may be possible to write a custom API just for this sometime in the future.
+  - Twitter APIs dont deal w/replies vs mentions in a good way, making it hard to write the bot the way I want (which is slightly different from bots like `@QuotedReplies`). Was forced to add the **#advice** requirement as a (hopefully) temporary workaround. Perhaps may be possible to write a custom API just for this sometime in the future.
   
 * **RateLimitError** [https://developer.twitter.com/en/docs/basics/rate-limiting] 
   - Error Msg >> `tweepy.error.RateLimitError: [{'message': 'Rate limit exceeded', 'code': 88}]`
