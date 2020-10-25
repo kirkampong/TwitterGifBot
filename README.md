@@ -1,4 +1,5 @@
 # TwitterGifBot
+**[Currently Advice Bot]**  
 Work in progress...
 - Basic reply bot implemented using `tweepy` and `pythonanywhere`. Cloud hosted 
 - Full implementation (incl. storing and vending gifs) requires more work.
